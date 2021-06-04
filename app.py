@@ -6,15 +6,26 @@ model=pickle.load(open('model.pkl','rb'))
 
 app = Flask(__name__)
 
-# Index route
+# Login Page route
 @app.route('/')
 def hello_world():
+    return render_template("login.html")
+
+# Dashboard home page route
+@app.route('/home')
+def login():
     return render_template("index.html")
 
-# Login Page route
-@app.route('/login')
-def login():
-    return render_template("login.html")
+# Dashboard home page route
+@app.route('/home_logged',methods=['POST', 'GET'])
+def logged_in():
+    mail = request.form['email']
+    pasw = request.form['password']
+
+    if (mail == "kardam.agarwal@gmail.com" and pasw == "password"):
+        return render_template("index.html")
+    else:
+        return render_template("login.html", error="Invalid mail or password!")
 
 # Register Page route
 @app.route('/register')
